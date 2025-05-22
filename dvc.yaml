@@ -70,3 +70,16 @@ stages:
     metrics:
     - results/tree/metrics_full.json:
         cache: false
+  train_cat:
+    cmd: python catboost_learn.py
+    deps:
+    - catboost_learn.py
+    - prepare/X_train.csv
+    - prepare/y_train.csv
+    outs:
+    - models/catboost_model.cbm
+    - results/catboost/feature_importance.csv
+    - results/catboost/feature_importance.png
+    metrics:
+    - results/catboost/metrics_learn.json:
+        cache: false

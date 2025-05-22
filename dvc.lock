@@ -164,3 +164,35 @@ stages:
       hash: md5
       md5: 8122ce9a700deb0f181913b72f7f2c00
       size: 65831
+  train_cat:
+    cmd: python catboost_learn.py
+    deps:
+    - path: catboost_learn.py
+      hash: md5
+      md5: 58c0443408c087ef31c46536e43117fc
+      size: 1865
+    - path: prepare/X_train.csv
+      hash: md5
+      md5: 951ed1e034405977317d9dca0b7aa292
+      size: 417024
+    - path: prepare/y_train.csv
+      hash: md5
+      md5: 31befaa5fa07e3325ffec4fd07cf36b3
+      size: 107663
+    outs:
+    - path: models/catboost_model.cbm
+      hash: md5
+      md5: 5c1b7f415c76103bb1623596cce154a8
+      size: 1115240
+    - path: results/catboost/feature_importance.csv
+      hash: md5
+      md5: 35566fea374f30694d253de195e4b8f5
+      size: 245
+    - path: results/catboost/feature_importance.png
+      hash: md5
+      md5: 660bc8b1beafd05d0efff50b866cd056
+      size: 23237
+    - path: results/catboost/metrics_learn.json
+      hash: md5
+      md5: 0f0f448f56232e81ccd9685a0bc5c2b8
+      size: 98
