@@ -83,3 +83,16 @@ stages:
     metrics:
     - results/catboost/metrics_learn.json:
         cache: false
+  validate_cat:
+    cmd: python catboost_valid.py
+    deps:
+    - catboost_valid.py
+    - models/catboost_model.cbm
+    - prepare/X_val.csv
+    - prepare/y_val.csv
+    outs:
+    - results/catboost/actual_vs_pred_valid.png
+    - results/catboost/residual_plot_valid.png
+    metrics:
+    - results/catboost/metrics_valid.json:
+        cache: false

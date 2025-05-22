@@ -196,3 +196,35 @@ stages:
       hash: md5
       md5: 0f0f448f56232e81ccd9685a0bc5c2b8
       size: 98
+  validate_cat:
+    cmd: python catboost_valid.py
+    deps:
+    - path: catboost_valid.py
+      hash: md5
+      md5: 29c8414c94b6ac0b79bbb8633ab35564
+      size: 1952
+    - path: models/catboost_model.cbm
+      hash: md5
+      md5: 5c1b7f415c76103bb1623596cce154a8
+      size: 1115240
+    - path: prepare/X_val.csv
+      hash: md5
+      md5: ab6214fb595f0777887f27920ea9f4a3
+      size: 278184
+    - path: prepare/y_val.csv
+      hash: md5
+      md5: 3e9f5fb3f7224642b25e333694a4c580
+      size: 71858
+    outs:
+    - path: results/catboost/actual_vs_pred_valid.png
+      hash: md5
+      md5: 1925c92b12251c5b9fd26791c32a05da
+      size: 184570
+    - path: results/catboost/metrics_valid.json
+      hash: md5
+      md5: 73af7633d8e59011ac33f99c4398a005
+      size: 97
+    - path: results/catboost/residual_plot_valid.png
+      hash: md5
+      md5: 78c5bddb1aaa54eeb360368e9aa28171
+      size: 158640
