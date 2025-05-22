@@ -1,0 +1,12 @@
+stages:
+  train_linear:
+    cmd: python linear_reg_learn.py
+    deps:
+    - linear_reg_learn.py
+    - prepare/X_train.csv
+    - prepare/y_train.csv
+    outs:
+    - models/linear_model.pkl
+    metrics:
+    - results/linear/metrics_learn.json:
+        cache: false
