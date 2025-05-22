@@ -57,3 +57,16 @@ stages:
     metrics:
     - results/tree/metrics_valid.json:
         cache: false
+  fullrun_tree:
+    cmd: python tree_full.py
+    deps:
+    - models/tree_model.pkl
+    - prepare/X_full.csv
+    - prepare/y_full.csv
+    - tree_full.py
+    outs:
+    - results/tree/actual_vs_pred_full.png
+    - results/tree/residual_plot_full.png
+    metrics:
+    - results/tree/metrics_full.json:
+        cache: false

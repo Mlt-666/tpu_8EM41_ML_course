@@ -132,3 +132,35 @@ stages:
       hash: md5
       md5: c66449e95018fb02b7d6289a90eedcaf
       size: 70780
+  fullrun_tree:
+    cmd: python tree_full.py
+    deps:
+    - path: models/tree_model.pkl
+      hash: md5
+      md5: 475adcb2b68b82da8811165ee12dee35
+      size: 3809
+    - path: prepare/X_full.csv
+      hash: md5
+      md5: 6bc73e8630953323505add078c71d90f
+      size: 695097
+    - path: prepare/y_full.csv
+      hash: md5
+      md5: 168f111a31d410b1a5f5be395dc7b27f
+      size: 179501
+    - path: tree_full.py
+      hash: md5
+      md5: 48f50d482264f5b8f24a596ae0614cfd
+      size: 1911
+    outs:
+    - path: results/tree/actual_vs_pred_full.png
+      hash: md5
+      md5: 77c7d178927ad8dd802bb68f73f2774f
+      size: 85296
+    - path: results/tree/metrics_full.json
+      hash: md5
+      md5: ed8de699a69729ab2def56b0ade2f802
+      size: 96
+    - path: results/tree/residual_plot_full.png
+      hash: md5
+      md5: 8122ce9a700deb0f181913b72f7f2c00
+      size: 65831
