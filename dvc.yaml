@@ -122,3 +122,16 @@ stages:
     metrics:
     - results/xgboost/metrics_learn.json:
         cache: false
+  validate_xgb:
+    cmd: python xgboost_valid.py
+    deps:
+    - models/xgboost_model.json
+    - prepare/X_val.csv
+    - prepare/y_val.csv
+    - xgboost_valid.py
+    outs:
+    - results/xgboost/actual_vs_pred_valid.png
+    - results/xgboost/residual_plot_valid.png
+    metrics:
+    - results/xgboost/metrics_valid.json:
+        cache: false

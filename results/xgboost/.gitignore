@@ -1,2 +1,4 @@
 /feature_importance.csv
 /feature_importance.png
+/actual_vs_pred_valid.png
+/residual_plot_valid.png
