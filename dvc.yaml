@@ -10,3 +10,13 @@ stages:
     metrics:
     - results/linear/metrics_learn.json:
         cache: false
+  validate_linear:
+    cmd: python linear_reg_valid.py
+    deps:
+    - linear_reg_valid.py
+    - models/linear_model.pkl
+    - prepare/X_val.csv
+    - prepare/y_val.csv
+    metrics:
+    - results/linear/metrics_valid.json:
+        cache: false

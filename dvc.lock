@@ -1,0 +1,50 @@
+schema: '2.0'
+stages:
+  train_linear:
+    cmd: python linear_reg_learn.py
+    deps:
+    - path: linear_reg_learn.py
+      hash: md5
+      md5: 07f63e7931a08da7c776bd29262d9663
+      size: 1025
+    - path: prepare/X_train.csv
+      hash: md5
+      md5: 951ed1e034405977317d9dca0b7aa292
+      size: 417024
+    - path: prepare/y_train.csv
+      hash: md5
+      md5: 31befaa5fa07e3325ffec4fd07cf36b3
+      size: 107663
+    outs:
+    - path: models/linear_model.pkl
+      hash: md5
+      md5: 188068dbb2e06aebf93698991173f49c
+      size: 1087
+    - path: results/linear/metrics_learn.json
+      hash: md5
+      md5: 50dca8c54cc09a7a141bb76c243fe83f
+      size: 97
+  validate_linear:
+    cmd: python linear_reg_valid.py
+    deps:
+    - path: linear_reg_valid.py
+      hash: md5
+      md5: 03c4a72ca6a8527cdf27bd3818eb0b3b
+      size: 858
+    - path: models/linear_model.pkl
+      hash: md5
+      md5: 188068dbb2e06aebf93698991173f49c
+      size: 1087
+    - path: prepare/X_val.csv
+      hash: md5
+      md5: ab6214fb595f0777887f27920ea9f4a3
+      size: 278184
+    - path: prepare/y_val.csv
+      hash: md5
+      md5: 3e9f5fb3f7224642b25e333694a4c580
+      size: 71858
+    outs:
+    - path: results/linear/metrics_valid.json
+      hash: md5
+      md5: 22e94b265105d6e1e0cac156f065c407
+      size: 97
