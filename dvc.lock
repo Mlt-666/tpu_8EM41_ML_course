@@ -429,3 +429,35 @@ stages:
       hash: md5
       md5: e8a8dbb6db2e6dcba3d46d1273aca564
       size: 139821
+  fullrun_mlp:
+    cmd: python mlp_full.py
+    deps:
+    - path: mlp_full.py
+      hash: md5
+      md5: b1f379ad893ab3f03cd8bb360739765a
+      size: 1856
+    - path: models/mlp_model.pkl
+      hash: md5
+      md5: 37c0386a3821ba36f6b8b0e139e8cc1c
+      size: 96335
+    - path: prepare/X_full.csv
+      hash: md5
+      md5: 6bc73e8630953323505add078c71d90f
+      size: 695097
+    - path: prepare/y_full.csv
+      hash: md5
+      md5: 168f111a31d410b1a5f5be395dc7b27f
+      size: 179501
+    outs:
+    - path: results/mlp/actual_vs_pred_full.png
+      hash: md5
+      md5: 572af1e1e33dae4d84904de3abd7f6f4
+      size: 171104
+    - path: results/mlp/metrics_full.json
+      hash: md5
+      md5: b31370768c74a269eaba0da0968886d9
+      size: 95
+    - path: results/mlp/residual_plot_full.png
+      hash: md5
+      md5: d1e9504e9f59fa6adb139f33a12c917f
+      size: 123228

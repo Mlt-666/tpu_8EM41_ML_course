@@ -176,3 +176,16 @@ stages:
     metrics:
     - results/mlp/metrics_valid.json:
         cache: false
+  fullrun_mlp:
+    cmd: python mlp_full.py
+    deps:
+    - mlp_full.py
+    - models/mlp_model.pkl
+    - prepare/X_full.csv
+    - prepare/y_full.csv
+    outs:
+    - results/mlp/actual_vs_pred_full.png
+    - results/mlp/residual_plot_full.png
+    metrics:
+    - results/mlp/metrics_full.json:
+        cache: false
