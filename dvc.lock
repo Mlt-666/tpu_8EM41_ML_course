@@ -100,3 +100,35 @@ stages:
       hash: md5
       md5: baf8e19b8c13998c5b3bc0aa2a08becb
       size: 98333
+  validate_tree:
+    cmd: python tree_valid.py
+    deps:
+    - path: models/tree_model.pkl
+      hash: md5
+      md5: 475adcb2b68b82da8811165ee12dee35
+      size: 3809
+    - path: prepare/X_val.csv
+      hash: md5
+      md5: ab6214fb595f0777887f27920ea9f4a3
+      size: 278184
+    - path: prepare/y_val.csv
+      hash: md5
+      md5: 3e9f5fb3f7224642b25e333694a4c580
+      size: 71858
+    - path: tree_valid.py
+      hash: md5
+      md5: bc017def4ecf042ac5248a347209cf0d
+      size: 1925
+    outs:
+    - path: results/tree/actual_vs_pred_valid.png
+      hash: md5
+      md5: 1aa2a307d0b2e14f06a7d847ee876988
+      size: 88330
+    - path: results/tree/metrics_valid.json
+      hash: md5
+      md5: 2565a4287aff55cd85d4bd9469e1b38f
+      size: 96
+    - path: results/tree/residual_plot_valid.png
+      hash: md5
+      md5: c66449e95018fb02b7d6289a90eedcaf
+      size: 70780
