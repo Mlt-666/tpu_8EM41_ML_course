@@ -20,3 +20,15 @@ stages:
     metrics:
     - results/linear/metrics_valid.json:
         cache: false
+  fullrun_linear:
+    cmd: python linear_reg_full.py
+    deps:
+    - prepare/X_full.csv
+    - prepare/y_full.csv
+    - models/linear_model.pkl
+    - linear_reg_full.py
+    metrics:
+    - results/linear/metrics_full.json
+
+
+

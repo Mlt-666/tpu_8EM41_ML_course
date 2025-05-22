@@ -48,3 +48,27 @@ stages:
       hash: md5
       md5: 22e94b265105d6e1e0cac156f065c407
       size: 97
+  fullrun_linear:
+    cmd: python linear_reg_full.py
+    deps:
+    - path: linear_reg_full.py
+      hash: md5
+      md5: d96be11bc91e2a59e0bcd95345b05ba1
+      size: 830
+    - path: models/linear_model.pkl
+      hash: md5
+      md5: 188068dbb2e06aebf93698991173f49c
+      size: 1087
+    - path: prepare/X_full.csv
+      hash: md5
+      md5: 6bc73e8630953323505add078c71d90f
+      size: 695097
+    - path: prepare/y_full.csv
+      hash: md5
+      md5: 168f111a31d410b1a5f5be395dc7b27f
+      size: 179501
+    outs:
+    - path: results/linear/metrics_full.json
+      hash: md5
+      md5: 492cd37b165666e9e6c57d81c4f0ebaa
+      size: 96
