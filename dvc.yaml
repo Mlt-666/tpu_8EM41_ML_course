@@ -96,3 +96,16 @@ stages:
     metrics:
     - results/catboost/metrics_valid.json:
         cache: false
+  fullrun_cat:
+    cmd: python catboost_full.py
+    deps:
+    - catboost_full.py
+    - models/catboost_model.cbm
+    - prepare/X_full.csv
+    - prepare/y_full.csv
+    outs:
+    - results/catboost/actual_vs_pred_full.png
+    - results/catboost/residual_plot_full.png
+    metrics:
+    - results/catboost/metrics_full.json:
+        cache: false
