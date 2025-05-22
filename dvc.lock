@@ -5,8 +5,8 @@ stages:
     deps:
     - path: linear_reg_learn.py
       hash: md5
-      md5: 5c3186311cf792c1866e0722f0307010
-      size: 2239
+      md5: b60bf46c815b6d262fd152386ee78616
+      size: 2600
     - path: prepare/X_train.csv
       hash: md5
       md5: 951ed1e034405977317d9dca0b7aa292
