@@ -29,8 +29,8 @@ stages:
     deps:
     - path: linear_reg_valid.py
       hash: md5
-      md5: 03c4a72ca6a8527cdf27bd3818eb0b3b
-      size: 858
+      md5: f5e6fa667e26dc3a859af841d37a52d8
+      size: 1946
     - path: models/linear_model.pkl
       hash: md5
       md5: 188068dbb2e06aebf93698991173f49c
