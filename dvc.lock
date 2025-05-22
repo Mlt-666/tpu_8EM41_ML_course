@@ -324,3 +324,35 @@ stages:
       hash: md5
       md5: 998bdda085e0cde2b5504b7abd0d84c3
       size: 159055
+  fullrun_xgb:
+    cmd: python xgboost_full.py
+    deps:
+    - path: models/xgboost_model.json
+      hash: md5
+      md5: be0bf1cec36145c66582158f324d54d0
+      size: 585505
+    - path: prepare/X_full.csv
+      hash: md5
+      md5: 6bc73e8630953323505add078c71d90f
+      size: 695097
+    - path: prepare/y_full.csv
+      hash: md5
+      md5: 168f111a31d410b1a5f5be395dc7b27f
+      size: 179501
+    - path: xgboost_full.py
+      hash: md5
+      md5: d1f046501825b3d2ac0ef74299be1bd6
+      size: 1932
+    outs:
+    - path: results/xgboost/actual_vs_pred_full.png
+      hash: md5
+      md5: 4ef069fd20a0c1f538cff42a947cef82
+      size: 188376
+    - path: results/xgboost/metrics_full.json
+      hash: md5
+      md5: 8318a1b03c12ed2dcd1dce8fb5784161
+      size: 87
+    - path: results/xgboost/residual_plot_full.png
+      hash: md5
+      md5: 55dbc2fd22e499798bd44db0b4c3cb6d
+      size: 149178

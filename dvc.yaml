@@ -135,3 +135,16 @@ stages:
     metrics:
     - results/xgboost/metrics_valid.json:
         cache: false
+  fullrun_xgb:
+    cmd: python xgboost_full.py
+    deps:
+    - models/xgboost_model.json
+    - prepare/X_full.csv
+    - prepare/y_full.csv
+    - xgboost_full.py
+    outs:
+    - results/xgboost/actual_vs_pred_full.png
+    - results/xgboost/residual_plot_full.png
+    metrics:
+    - results/xgboost/metrics_full.json:
+        cache: false
