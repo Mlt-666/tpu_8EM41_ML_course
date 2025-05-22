@@ -32,3 +32,15 @@ stages:
 
 
 
+  train_tree:
+    cmd: python tree_learn.py
+    deps:
+    - prepare/X_train.csv
+    - prepare/y_train.csv
+    - tree_learn.py
+    outs:
+    - models/tree_model.pkl
+    - results/tree/tree_structure.png
+    metrics:
+    - results/tree/metrics_learn.json:
+        cache: false

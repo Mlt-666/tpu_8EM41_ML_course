@@ -72,3 +72,31 @@ stages:
       hash: md5
       md5: 492cd37b165666e9e6c57d81c4f0ebaa
       size: 96
+  train_tree:
+    cmd: python tree_learn.py
+    deps:
+    - path: prepare/X_train.csv
+      hash: md5
+      md5: 951ed1e034405977317d9dca0b7aa292
+      size: 417024
+    - path: prepare/y_train.csv
+      hash: md5
+      md5: 31befaa5fa07e3325ffec4fd07cf36b3
+      size: 107663
+    - path: tree_learn.py
+      hash: md5
+      md5: 90e5babaa9f0cb79b7e08b5edb11f1d5
+      size: 1467
+    outs:
+    - path: models/tree_model.pkl
+      hash: md5
+      md5: 475adcb2b68b82da8811165ee12dee35
+      size: 3809
+    - path: results/tree/metrics_learn.json
+      hash: md5
+      md5: 73d1fcd7c81c83082207fe3d56afabc2
+      size: 95
+    - path: results/tree/tree_structure.png
+      hash: md5
+      md5: baf8e19b8c13998c5b3bc0aa2a08becb
+      size: 98333
