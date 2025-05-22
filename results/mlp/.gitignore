@@ -1,3 +1,5 @@
 /loss_curve.png
 /weights_histogram_layer1.png
 /weights_histogram_layer2.png
+/actual_vs_pred_valid.png
+/residual_plot_valid.png

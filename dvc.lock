@@ -397,3 +397,35 @@ stages:
       md5: facdbba15f0ed986e74a61481dcc8654.dir
       size: 30387
       nfiles: 1
+  validate_mlp:
+    cmd: python mlp_valid.py
+    deps:
+    - path: mlp_valid.py
+      hash: md5
+      md5: 663a96f9aa98bbb58ed4c3d5be846001
+      size: 1869
+    - path: models/mlp_model.pkl
+      hash: md5
+      md5: 37c0386a3821ba36f6b8b0e139e8cc1c
+      size: 96335
+    - path: prepare/X_val.csv
+      hash: md5
+      md5: ab6214fb595f0777887f27920ea9f4a3
+      size: 278184
+    - path: prepare/y_val.csv
+      hash: md5
+      md5: 3e9f5fb3f7224642b25e333694a4c580
+      size: 71858
+    outs:
+    - path: results/mlp/actual_vs_pred_valid.png
+      hash: md5
+      md5: b6e8a007b84ca99a0d25ae618d8068d0
+      size: 166157
+    - path: results/mlp/metrics_valid.json
+      hash: md5
+      md5: d4c0319a769589c1428e853c61eb6b8f
+      size: 94
+    - path: results/mlp/residual_plot_valid.png
+      hash: md5
+      md5: e8a8dbb6db2e6dcba3d46d1273aca564
+      size: 139821

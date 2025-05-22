@@ -163,3 +163,16 @@ stages:
     metrics:
     - results/mlp/metrics_learn.json:
         cache: false
+  validate_mlp:
+    cmd: python mlp_valid.py
+    deps:
+    - mlp_valid.py
+    - models/mlp_model.pkl
+    - prepare/X_val.csv
+    - prepare/y_val.csv
+    outs:
+    - results/mlp/actual_vs_pred_valid.png
+    - results/mlp/residual_plot_valid.png
+    metrics:
+    - results/mlp/metrics_valid.json:
+        cache: false
