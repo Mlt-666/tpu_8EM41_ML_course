@@ -148,3 +148,18 @@ stages:
     metrics:
     - results/xgboost/metrics_full.json:
         cache: false
+  train_mlp:
+    cmd: python mlp_learn.py
+    deps:
+    - mlp_learn.py
+    - prepare/X_train.csv
+    - prepare/y_train.csv
+    outs:
+    - models/mlp_model.pkl
+    - results/mlp/loss_curve.png
+    - results/mlp/weights_histogram_layer1.png
+    - results/mlp/weights_histogram_layer2.png
+    - runs/mlp/
+    metrics:
+    - results/mlp/metrics_learn.json:
+        cache: false

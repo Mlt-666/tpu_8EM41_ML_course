@@ -356,3 +356,44 @@ stages:
       hash: md5
       md5: 55dbc2fd22e499798bd44db0b4c3cb6d
       size: 149178
+  train_mlp:
+    cmd: python mlp_learn.py
+    deps:
+    - path: mlp_learn.py
+      hash: md5
+      md5: cecdd1b191c30b03b474c2ac63b1f2a8
+      size: 2476
+    - path: prepare/X_train.csv
+      hash: md5
+      md5: 951ed1e034405977317d9dca0b7aa292
+      size: 417024
+    - path: prepare/y_train.csv
+      hash: md5
+      md5: 31befaa5fa07e3325ffec4fd07cf36b3
+      size: 107663
+    outs:
+    - path: models/mlp_model.pkl
+      hash: md5
+      md5: 37c0386a3821ba36f6b8b0e139e8cc1c
+      size: 96335
+    - path: results/mlp/loss_curve.png
+      hash: md5
+      md5: f1d095cfb120508bda28fbb21286698b
+      size: 22797
+    - path: results/mlp/metrics_learn.json
+      hash: md5
+      md5: cf9da66e0f2d15f48ca6b2e43cc62bf1
+      size: 96
+    - path: results/mlp/weights_histogram_layer1.png
+      hash: md5
+      md5: 50b6b4b552b948ca7d012e994ce9ab84
+      size: 17259
+    - path: results/mlp/weights_histogram_layer2.png
+      hash: md5
+      md5: 74656e166ec07488167bfd4db86ad606
+      size: 16713
+    - path: runs/mlp/
+      hash: md5
+      md5: facdbba15f0ed986e74a61481dcc8654.dir
+      size: 30387
+      nfiles: 1

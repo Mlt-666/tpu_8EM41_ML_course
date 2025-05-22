@@ -1,1 +1,5 @@
 /linear_model.pkl
+/tree_model.pkl
+/catboost_model.cbm
+/xgboost_model.json
+/mlp_model.pkl
