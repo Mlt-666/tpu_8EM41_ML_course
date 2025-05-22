@@ -260,3 +260,35 @@ stages:
       hash: md5
       md5: e2cc57f6f549b8ef38da66a553af29a9
       size: 156801
+  train_xgb:
+    cmd: python xgboost_learn.py
+    deps:
+    - path: prepare/X_train.csv
+      hash: md5
+      md5: 951ed1e034405977317d9dca0b7aa292
+      size: 417024
+    - path: prepare/y_train.csv
+      hash: md5
+      md5: 31befaa5fa07e3325ffec4fd07cf36b3
+      size: 107663
+    - path: xgboost_learn.py
+      hash: md5
+      md5: 86d24dc0263fb62c36d2ab85435241e3
+      size: 1798
+    outs:
+    - path: models/xgboost_model.json
+      hash: md5
+      md5: be0bf1cec36145c66582158f324d54d0
+      size: 585505
+    - path: results/xgboost/feature_importance.csv
+      hash: md5
+      md5: dec3521e70ec928a2a42d01cbb2e28d3
+      size: 205
+    - path: results/xgboost/feature_importance.png
+      hash: md5
+      md5: c15b05691aaa0bff3464cd6c80d7f349
+      size: 23270
+    - path: results/xgboost/metrics_learn.json
+      hash: md5
+      md5: db74b8d098df141a3514622cef25fc6c
+      size: 84

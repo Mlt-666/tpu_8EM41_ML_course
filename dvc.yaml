@@ -109,3 +109,16 @@ stages:
     metrics:
     - results/catboost/metrics_full.json:
         cache: false
+  train_xgb:
+    cmd: python xgboost_learn.py
+    deps:
+    - prepare/X_train.csv
+    - prepare/y_train.csv
+    - xgboost_learn.py
+    outs:
+    - models/xgboost_model.json
+    - results/xgboost/feature_importance.csv
+    - results/xgboost/feature_importance.png
+    metrics:
+    - results/xgboost/metrics_learn.json:
+        cache: false
