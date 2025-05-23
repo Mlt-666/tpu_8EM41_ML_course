@@ -461,3 +461,30 @@ stages:
       hash: md5
       md5: d1e9504e9f59fa6adb139f33a12c917f
       size: 123228
+  prepare_data:
+    cmd: python prepare_data.py
+    outs:
+    - path: prepare/X_full.csv
+      hash: md5
+      md5: ed36f06e775c5396f57d5a32ca115457
+      size: 1380519
+    - path: prepare/X_train.csv
+      hash: md5
+      md5: 8bcc95bdecf1d74e99bf8c5f316987e2
+      size: 828267
+    - path: prepare/X_val.csv
+      hash: md5
+      md5: ea5501803b7e7ad4c8169b0a14a8bbc4
+      size: 552452
+    - path: prepare/y_full.csv
+      hash: md5
+      md5: 168f111a31d410b1a5f5be395dc7b27f
+      size: 179501
+    - path: prepare/y_train.csv
+      hash: md5
+      md5: 31befaa5fa07e3325ffec4fd07cf36b3
+      size: 107663
+    - path: prepare/y_val.csv
+      hash: md5
+      md5: 3e9f5fb3f7224642b25e333694a4c580
+      size: 71858

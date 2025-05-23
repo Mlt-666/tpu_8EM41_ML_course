@@ -189,3 +189,12 @@ stages:
     metrics:
     - results/mlp/metrics_full.json:
         cache: false
+  prepare_data:
+    cmd: python prepare_data.py
+    outs:
+    - prepare/X_full.csv
+    - prepare/X_train.csv
+    - prepare/X_val.csv
+    - prepare/y_full.csv
+    - prepare/y_train.csv
+    - prepare/y_val.csv
