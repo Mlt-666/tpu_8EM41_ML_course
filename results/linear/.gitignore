@@ -3,3 +3,5 @@
 !actual_vs_pred*.png
 !residual_plot*.png
 !weights.json
+/actual_vs_pred_full.png
+/residual_plot_full.png
