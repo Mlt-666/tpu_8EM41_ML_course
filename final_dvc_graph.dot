@@ -1,0 +1,28 @@
+strict digraph {
+"train_linear";
+"validate_linear";
+"fullrun_linear";
+"train_tree";
+"validate_tree";
+"fullrun_tree";
+"train_cat";
+"validate_cat";
+"fullrun_cat";
+"train_xgb";
+"validate_xgb";
+"fullrun_xgb";
+"train_mlp";
+"validate_mlp";
+"fullrun_mlp";
+"train_linear" -> "validate_linear";
+"train_linear" -> "fullrun_linear";
+"train_tree" -> "validate_tree";
+"train_tree" -> "fullrun_tree";
+"train_cat" -> "validate_cat";
+"train_cat" -> "fullrun_cat";
+"train_xgb" -> "validate_xgb";
+"train_xgb" -> "fullrun_xgb";
+"train_mlp" -> "validate_mlp";
+"train_mlp" -> "fullrun_mlp";
+}
+
