@@ -20,17 +20,29 @@ stages:
       hash: md5
       md5: 188068dbb2e06aebf93698991173f49c
       size: 1087
+    - path: results/linear/actual_vs_pred.png
+      hash: md5
+      md5: f4405e3f6c8600b60b53a8dee54a423c
+      size: 145237
     - path: results/linear/metrics_learn.json
       hash: md5
       md5: 50dca8c54cc09a7a141bb76c243fe83f
       size: 97
+    - path: results/linear/residual_plot.png
+      hash: md5
+      md5: 0e8a2f65fbbffb3a3c8cb9fe9e723dfa
+      size: 101063
+    - path: results/linear/weights.json
+      hash: md5
+      md5: 3adb2ce41036632fb887e0c02eb330f3
+      size: 281
   validate_linear:
     cmd: python linear_reg_valid.py
     deps:
     - path: linear_reg_valid.py
       hash: md5
-      md5: f5e6fa667e26dc3a859af841d37a52d8
-      size: 1946
+      md5: c5647801e170eff3d043ab2cdadd1f00
+      size: 1943
     - path: models/linear_model.pkl
       hash: md5
       md5: 188068dbb2e06aebf93698991173f49c
@@ -44,17 +56,25 @@ stages:
       md5: 3e9f5fb3f7224642b25e333694a4c580
       size: 71858
     outs:
+    - path: results/linear/actual_vs_pred_valid.png
+      hash: md5
+      md5: cbff7d139cdb074520d781fbdb2d0a73
+      size: 162213
     - path: results/linear/metrics_valid.json
       hash: md5
       md5: 22e94b265105d6e1e0cac156f065c407
       size: 97
+    - path: results/linear/residual_plot_valid.png
+      hash: md5
+      md5: 76eb1bdba81e70c5487dfa526e8bed7c
+      size: 124756
   fullrun_linear:
     cmd: python linear_reg_full.py
     deps:
     - path: linear_reg_full.py
       hash: md5
-      md5: 9896be80837712edaae635383a94efdf
-      size: 1999
+      md5: 817ca39b2f2adc802a9dea112a6bc494
+      size: 1988
     - path: models/linear_model.pkl
       hash: md5
       md5: 188068dbb2e06aebf93698991173f49c
@@ -68,10 +88,18 @@ stages:
       md5: 168f111a31d410b1a5f5be395dc7b27f
       size: 179501
     outs:
+    - path: results/linear/actual_vs_pred_full.png
+      hash: md5
+      md5: c05bbcfab22db526a953809813b41616
+      size: 146461
     - path: results/linear/metrics_full.json
       hash: md5
       md5: 492cd37b165666e9e6c57d81c4f0ebaa
       size: 96
+    - path: results/linear/residual_plot_full.png
+      hash: md5
+      md5: 8152a95707e4d75e170ea4893b155354
+      size: 98668
   train_tree:
     cmd: python tree_learn.py
     deps:
@@ -85,28 +113,28 @@ stages:
       size: 107663
     - path: tree_learn.py
       hash: md5
-      md5: 90e5babaa9f0cb79b7e08b5edb11f1d5
-      size: 1467
+      md5: 8d5ef6942c47f12adda980b9ab5ed380
+      size: 2244
     outs:
     - path: models/tree_model.pkl
       hash: md5
-      md5: 475adcb2b68b82da8811165ee12dee35
-      size: 3809
+      md5: c48b8fc43127dc6eee4d215237ae5fe3
+      size: 35921
     - path: results/tree/metrics_learn.json
       hash: md5
-      md5: 73d1fcd7c81c83082207fe3d56afabc2
-      size: 95
+      md5: afd492da9e4fc4691f0c956e9ff8bf1c
+      size: 96
     - path: results/tree/tree_structure.png
       hash: md5
-      md5: baf8e19b8c13998c5b3bc0aa2a08becb
-      size: 98333
+      md5: 55b90109ed5baeced51e98df34acf5d0
+      size: 98033
   validate_tree:
     cmd: python tree_valid.py
     deps:
     - path: models/tree_model.pkl
       hash: md5
-      md5: 475adcb2b68b82da8811165ee12dee35
-      size: 3809
+      md5: c48b8fc43127dc6eee4d215237ae5fe3
+      size: 35921
     - path: prepare/X_val.csv
       hash: md5
       md5: ab6214fb595f0777887f27920ea9f4a3
@@ -117,28 +145,28 @@ stages:
       size: 71858
     - path: tree_valid.py
       hash: md5
-      md5: bc017def4ecf042ac5248a347209cf0d
-      size: 1925
+      md5: 331f8c257b6df45c7451dc0a55796872
+      size: 2155
     outs:
     - path: results/tree/actual_vs_pred_valid.png
       hash: md5
-      md5: 1aa2a307d0b2e14f06a7d847ee876988
-      size: 88330
+      md5: c5e5a39edd8e016ce91324fe2e84179f
+      size: 170544
     - path: results/tree/metrics_valid.json
       hash: md5
-      md5: 2565a4287aff55cd85d4bd9469e1b38f
-      size: 96
+      md5: b947787ab1ce4af53e82445ba66df003
+      size: 97
     - path: results/tree/residual_plot_valid.png
       hash: md5
-      md5: c66449e95018fb02b7d6289a90eedcaf
-      size: 70780
+      md5: 9003d7e2851c5b9c112f11a362dd3146
+      size: 124728
   fullrun_tree:
     cmd: python tree_full.py
     deps:
     - path: models/tree_model.pkl
       hash: md5
-      md5: 475adcb2b68b82da8811165ee12dee35
-      size: 3809
+      md5: c48b8fc43127dc6eee4d215237ae5fe3
+      size: 35921
     - path: prepare/X_full.csv
       hash: md5
       md5: 6bc73e8630953323505add078c71d90f
@@ -154,23 +182,23 @@ stages:
     outs:
     - path: results/tree/actual_vs_pred_full.png
       hash: md5
-      md5: 77c7d178927ad8dd802bb68f73f2774f
-      size: 85296
+      md5: eaeed919dfac27560b93048e7d6187ae
+      size: 175125
     - path: results/tree/metrics_full.json
       hash: md5
-      md5: ed8de699a69729ab2def56b0ade2f802
+      md5: 4221795c6b82325d8de9b2c1698ae2c1
       size: 96
     - path: results/tree/residual_plot_full.png
       hash: md5
-      md5: 8122ce9a700deb0f181913b72f7f2c00
-      size: 65831
+      md5: 571cf6ffe624cd1b3dfad69e37e0ef1e
+      size: 126274
   train_cat:
     cmd: python catboost_learn.py
     deps:
     - path: catboost_learn.py
       hash: md5
-      md5: 58c0443408c087ef31c46536e43117fc
-      size: 1865
+      md5: 9c2ac198cc6a1afc76d30ae8bddc1ddf
+      size: 2147
     - path: prepare/X_train.csv
       hash: md5
       md5: 951ed1e034405977317d9dca0b7aa292
@@ -182,20 +210,20 @@ stages:
     outs:
     - path: models/catboost_model.cbm
       hash: md5
-      md5: 5c1b7f415c76103bb1623596cce154a8
-      size: 1115240
+      md5: 1c9faf5e7ee24c9abe2a97ac388040f9
+      size: 832976
     - path: results/catboost/feature_importance.csv
       hash: md5
-      md5: 35566fea374f30694d253de195e4b8f5
-      size: 245
+      md5: 0b25fdf31f093d47ecc05ff758d4958e
+      size: 246
     - path: results/catboost/feature_importance.png
       hash: md5
-      md5: 660bc8b1beafd05d0efff50b866cd056
-      size: 23237
+      md5: 9695b81f5713384eb5c6ec2065b4437c
+      size: 23242
     - path: results/catboost/metrics_learn.json
       hash: md5
-      md5: 0f0f448f56232e81ccd9685a0bc5c2b8
-      size: 98
+      md5: cff570c74d13548a9a8e516e11309058
+      size: 97
   validate_cat:
     cmd: python catboost_valid.py
     deps:
@@ -205,8 +233,8 @@ stages:
       size: 1952
     - path: models/catboost_model.cbm
       hash: md5
-      md5: 5c1b7f415c76103bb1623596cce154a8
-      size: 1115240
+      md5: 1c9faf5e7ee24c9abe2a97ac388040f9
+      size: 832976
     - path: prepare/X_val.csv
       hash: md5
       md5: ab6214fb595f0777887f27920ea9f4a3
@@ -218,16 +246,16 @@ stages:
     outs:
     - path: results/catboost/actual_vs_pred_valid.png
       hash: md5
-      md5: 1925c92b12251c5b9fd26791c32a05da
-      size: 184570
+      md5: 4e70627681e1330222e420ccd786e805
+      size: 178617
     - path: results/catboost/metrics_valid.json
       hash: md5
-      md5: 73af7633d8e59011ac33f99c4398a005
+      md5: 413edf045a0cac892af61374d425fc2b
       size: 97
     - path: results/catboost/residual_plot_valid.png
       hash: md5
-      md5: 78c5bddb1aaa54eeb360368e9aa28171
-      size: 158640
+      md5: 7437fab1776c7802f1a2a564a95e468f
+      size: 170299
   fullrun_cat:
     cmd: python catboost_full.py
     deps:
@@ -237,8 +265,8 @@ stages:
       size: 1968
     - path: models/catboost_model.cbm
       hash: md5
-      md5: 5c1b7f415c76103bb1623596cce154a8
-      size: 1115240
+      md5: 1c9faf5e7ee24c9abe2a97ac388040f9
+      size: 832976
     - path: prepare/X_full.csv
       hash: md5
       md5: 6bc73e8630953323505add078c71d90f
@@ -250,16 +278,16 @@ stages:
     outs:
     - path: results/catboost/actual_vs_pred_full.png
       hash: md5
-      md5: 4d0d2ec9acc290dac7c31924c7c5cd7a
-      size: 187232
+      md5: 7d87c731ab4c1dc33e445f0c9ee62723
+      size: 184563
     - path: results/catboost/metrics_full.json
       hash: md5
-      md5: d971c2c86ad0deb8ed7f811806e1dab9
-      size: 97
+      md5: 1d3ecb21d39ff6fb1abb25d7d2576979
+      size: 96
     - path: results/catboost/residual_plot_full.png
       hash: md5
-      md5: e2cc57f6f549b8ef38da66a553af29a9
-      size: 156801
+      md5: 73334dd93212ba57a120cad2ed1f8f5c
+      size: 163548
   train_xgb:
     cmd: python xgboost_learn.py
     deps:
@@ -361,8 +389,8 @@ stages:
     deps:
     - path: mlp_learn.py
       hash: md5
-      md5: cecdd1b191c30b03b474c2ac63b1f2a8
-      size: 2476
+      md5: 3787c1e4f5714eac8f87d75187820da3
+      size: 3142
     - path: prepare/X_train.csv
       hash: md5
       md5: 951ed1e034405977317d9dca0b7aa292
@@ -374,28 +402,32 @@ stages:
     outs:
     - path: models/mlp_model.pkl
       hash: md5
-      md5: 37c0386a3821ba36f6b8b0e139e8cc1c
-      size: 96335
+      md5: 8bd373b7b9884d4ab6f8a4a62dca075c
+      size: 312287
     - path: results/mlp/loss_curve.png
       hash: md5
-      md5: f1d095cfb120508bda28fbb21286698b
-      size: 22797
+      md5: 660fcd4aa2dd17add7720e96ddfd9739
+      size: 18862
     - path: results/mlp/metrics_learn.json
       hash: md5
-      md5: cf9da66e0f2d15f48ca6b2e43cc62bf1
-      size: 96
+      md5: a3adfb68952599df7b3284689a50647d
+      size: 97
     - path: results/mlp/weights_histogram_layer1.png
       hash: md5
-      md5: 50b6b4b552b948ca7d012e994ce9ab84
-      size: 17259
+      md5: 27801affd873971b7352cdcd33feee51
+      size: 16654
     - path: results/mlp/weights_histogram_layer2.png
       hash: md5
-      md5: 74656e166ec07488167bfd4db86ad606
-      size: 16713
+      md5: fb7ebd89c9226150b428657fafd51247
+      size: 19291
+    - path: results/mlp/weights_histogram_layer3.png
+      hash: md5
+      md5: 3c30d3ef44949f94fccb7a3d001a1b65
+      size: 17199
     - path: runs/mlp/
       hash: md5
-      md5: facdbba15f0ed986e74a61481dcc8654.dir
-      size: 30387
+      md5: 55316a08e85c8e243fdc57513d1912fe.dir
+      size: 29123
       nfiles: 1
   validate_mlp:
     cmd: python mlp_valid.py
@@ -406,8 +438,8 @@ stages:
       size: 1869
     - path: models/mlp_model.pkl
       hash: md5
-      md5: 37c0386a3821ba36f6b8b0e139e8cc1c
-      size: 96335
+      md5: 8bd373b7b9884d4ab6f8a4a62dca075c
+      size: 312287
     - path: prepare/X_val.csv
       hash: md5
       md5: ab6214fb595f0777887f27920ea9f4a3
@@ -419,16 +451,16 @@ stages:
     outs:
     - path: results/mlp/actual_vs_pred_valid.png
       hash: md5
-      md5: b6e8a007b84ca99a0d25ae618d8068d0
-      size: 166157
+      md5: 80aac683808e3df720c30cc7ab5880d0
+      size: 36877
     - path: results/mlp/metrics_valid.json
       hash: md5
-      md5: d4c0319a769589c1428e853c61eb6b8f
-      size: 94
+      md5: 0a36ecc6db03392efb870248f73f84de
+      size: 95
     - path: results/mlp/residual_plot_valid.png
       hash: md5
-      md5: e8a8dbb6db2e6dcba3d46d1273aca564
-      size: 139821
+      md5: adf2ac6ce1cddf2c48a7d16516297ff9
+      size: 29581
   fullrun_mlp:
     cmd: python mlp_full.py
     deps:
@@ -438,8 +470,8 @@ stages:
       size: 1856
     - path: models/mlp_model.pkl
       hash: md5
-      md5: 37c0386a3821ba36f6b8b0e139e8cc1c
-      size: 96335
+      md5: 8bd373b7b9884d4ab6f8a4a62dca075c
+      size: 312287
     - path: prepare/X_full.csv
       hash: md5
       md5: 6bc73e8630953323505add078c71d90f
@@ -451,31 +483,31 @@ stages:
     outs:
     - path: results/mlp/actual_vs_pred_full.png
       hash: md5
-      md5: 572af1e1e33dae4d84904de3abd7f6f4
-      size: 171104
+      md5: ed3625e987c418282d9c3170b8953c5c
+      size: 37190
     - path: results/mlp/metrics_full.json
       hash: md5
-      md5: b31370768c74a269eaba0da0968886d9
-      size: 95
+      md5: 27dbda6c7788010d26b319f655e7d862
+      size: 96
     - path: results/mlp/residual_plot_full.png
       hash: md5
-      md5: d1e9504e9f59fa6adb139f33a12c917f
-      size: 123228
+      md5: 65d371756823aee5eb230059ff80f66e
+      size: 30445
   prepare_data:
     cmd: python prepare_data.py
     outs:
     - path: prepare/X_full.csv
       hash: md5
-      md5: ed36f06e775c5396f57d5a32ca115457
-      size: 1380519
+      md5: 6bc73e8630953323505add078c71d90f
+      size: 695097
     - path: prepare/X_train.csv
       hash: md5
-      md5: 8bcc95bdecf1d74e99bf8c5f316987e2
-      size: 828267
+      md5: 951ed1e034405977317d9dca0b7aa292
+      size: 417024
     - path: prepare/X_val.csv
       hash: md5
-      md5: ea5501803b7e7ad4c8169b0a14a8bbc4
-      size: 552452
+      md5: ab6214fb595f0777887f27920ea9f4a3
+      size: 278184
     - path: prepare/y_full.csv
       hash: md5
       md5: 168f111a31d410b1a5f5be395dc7b27f

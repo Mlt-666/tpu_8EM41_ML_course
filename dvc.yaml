@@ -7,6 +7,9 @@ stages:
     - prepare/y_train.csv
     outs:
     - models/linear_model.pkl
+    - results/linear/actual_vs_pred.png
+    - results/linear/residual_plot.png
+    - results/linear/weights.json
     metrics:
     - results/linear/metrics_learn.json:
         cache: false
@@ -17,21 +20,26 @@ stages:
     - models/linear_model.pkl
     - prepare/X_val.csv
     - prepare/y_val.csv
+    outs:
+    - results/linear/actual_vs_pred_valid.png
+    - results/linear/residual_plot_valid.png
     metrics:
     - results/linear/metrics_valid.json:
         cache: false
   fullrun_linear:
     cmd: python linear_reg_full.py
+
     deps:
+    - linear_reg_full.py
+    - models/linear_model.pkl
     - prepare/X_full.csv
     - prepare/y_full.csv
-    - models/linear_model.pkl
-    - linear_reg_full.py
+    outs:
+    - results/linear/actual_vs_pred_full.png
+    - results/linear/residual_plot_full.png
     metrics:
-    - results/linear/metrics_full.json
-
-
-
+    - results/linear/metrics_full.json:
+        cache: false
   train_tree:
     cmd: python tree_learn.py
     deps:
@@ -159,6 +167,7 @@ stages:
     - results/mlp/loss_curve.png
     - results/mlp/weights_histogram_layer1.png
     - results/mlp/weights_histogram_layer2.png
+    - results/mlp/weights_histogram_layer3.png
     - runs/mlp/
     metrics:
     - results/mlp/metrics_learn.json:

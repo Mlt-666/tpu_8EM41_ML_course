@@ -14,6 +14,7 @@ strict digraph {
 "train_mlp";
 "validate_mlp";
 "fullrun_mlp";
+"prepare_data";
 "train_linear" -> "validate_linear";
 "train_linear" -> "fullrun_linear";
 "train_tree" -> "validate_tree";
@@ -24,5 +25,20 @@ strict digraph {
 "train_xgb" -> "fullrun_xgb";
 "train_mlp" -> "validate_mlp";
 "train_mlp" -> "fullrun_mlp";
+"prepare_data" -> "train_linear";
+"prepare_data" -> "validate_linear";
+"prepare_data" -> "fullrun_linear";
+"prepare_data" -> "train_tree";
+"prepare_data" -> "validate_tree";
+"prepare_data" -> "fullrun_tree";
+"prepare_data" -> "train_cat";
+"prepare_data" -> "validate_cat";
+"prepare_data" -> "fullrun_cat";
+"prepare_data" -> "train_xgb";
+"prepare_data" -> "validate_xgb";
+"prepare_data" -> "fullrun_xgb";
+"prepare_data" -> "train_mlp";
+"prepare_data" -> "validate_mlp";
+"prepare_data" -> "fullrun_mlp";
 }
 
