@@ -13,7 +13,7 @@ os.makedirs("models", exist_ok=True)
 os.makedirs("results/tree", exist_ok=True)
 
 # —— 2. 从 params.yaml 中读取 max_depth 和 random_state ——————————————————————
-with open("params.yaml", "r") as f:
+with open("params.yaml", "r", encoding="utf-8") as f:
     params = yaml.safe_load(f)
 
 tree_params = params.get("tree", {})

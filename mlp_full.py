@@ -2,19 +2,19 @@
 
 import os
 import json
-import joblib
 import yaml
+import pickle
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-from sklearn.preprocessing import StandardScaler
+from tensorflow.keras.models import load_model
 
 # —— 1. 创建输出目录 ——————————————————————————————————————————————————————————
 os.makedirs("results/mlp", exist_ok=True)
 
-# —— 2. （可选）打印当前 MLP 超参数 ——————————————————————————————————————————
+# —— 2. 读取超参数 ————————————————————————————————————————————————————————————
 if os.path.exists("params.yaml"):
     with open("params.yaml", "r", encoding="utf-8") as f:
         params = yaml.safe_load(f)
@@ -27,21 +27,22 @@ X_full = pd.read_csv("prepare/X_full.csv")
 y_full = pd.read_csv("prepare/y_full.csv").values.ravel()
 
 scaler_path = "models/mlp_scaler.pkl"
-if os.path.exists(scaler_path):
-    scaler = joblib.load(scaler_path)
-    X_full_scaled = scaler.transform(X_full)
-else:
-    raise FileNotFoundError(f"❌ 未找到 scaler 文件：{scaler_path}，请先运行训练脚本并保存 scaler。")
+if not os.path.exists(scaler_path):
+    raise FileNotFoundError(f"❌ 未找到 scaler 文件：{scaler_path}，请先运行训练脚本。")
 
-# —— 4. 加载训练好的 MLP 模型 ————————————————————————————————————————————————————
-model_path = "models/mlp_model.pkl"
-if os.path.exists(model_path):
-    model = joblib.load(model_path)
-else:
-    raise FileNotFoundError(f"❌ 未找到模型文件：{model_path}")
+with open(scaler_path, "rb") as f:
+    scaler = pickle.load(f)
+X_full_scaled = scaler.transform(X_full)
+
+# —— 4. 加载 Keras 训练好的 MLP 模型 ——————————————————————————————————————————
+model_path = "models/mlp_model.keras"
+if not os.path.exists(model_path):
+    raise FileNotFoundError(f"❌ 未找到模型文件：{model_path}，请先运行训练脚本。")
+
+model = load_model(model_path)
 
 # —— 5. 在全量数据上预测并计算评估指标 ————————————————————————————————————————
-y_pred = model.predict(X_full_scaled)
+y_pred = model.predict(X_full_scaled).flatten()
 mse    = mean_squared_error(y_full, y_pred)
 mae    = mean_absolute_error(y_full, y_pred)
 r2     = r2_score(y_full, y_pred)
@@ -53,7 +54,7 @@ metrics_full = {
     "MSE": mse
 }
 with open("results/mlp/metrics_full.json", "w", encoding="utf-8") as f:
-    json.dump(metrics_full, f, indent=4)
+    json.dump(metrics_full, f, indent=4, ensure_ascii=False)
 
 # —— 7. 可视化实际 vs 预测 + 残差图 ——————————————————————————————————————————————
 min_val = min(y_full.min(), y_pred.min())

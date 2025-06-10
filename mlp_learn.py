@@ -1,107 +1,149 @@
 import os
 import json
-import joblib
 import yaml
+import pickle
+import math
+import datetime
 import pandas as pd
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-
-from sklearn.neural_network import MLPRegressor
+import tensorflow as tf
+from tensorflow.keras import layers, models, callbacks
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-from torch.utils.tensorboard import SummaryWriter
 
-# —— 1. 读取超参数（指定 UTF-8 编码）———————————————————————————————
-with open("params.yaml", "r", encoding="utf-8") as f:
-    params = yaml.safe_load(f)
+def main():
+    print("开始 MLP (Keras) 模型训练...")
 
-mlp_params = params.get("mlp", {})
-hidden_layer_sizes = tuple(mlp_params.get("hidden_layer_sizes", [100, 50]))
-activation         = mlp_params.get("activation", "relu")
-solver             = mlp_params.get("solver", "adam")
-max_iter           = mlp_params.get("max_iter", 1000)
-random_state       = mlp_params.get("random_state", 42)
-alpha              = mlp_params.get("alpha", 0.0001)  # 加入 L2 正则项 alpha
+    # 1. 读取超参数
+    with open("params.yaml", "r", encoding="utf-8") as f:
+        params = yaml.safe_load(f)
+    mlp_params = params.get("mlp", {})
+    hidden_sizes = mlp_params.get("hidden_layer_sizes", [100, 50])
+    activation   = mlp_params.get("activation", "relu")
+    learning_rate = 1e-3  # 固定
+    epochs        = mlp_params.get("max_iter", 1000)
+    batch_size    = 32    # 固定
+    patience      = 20    # 固定
+    random_seed   = mlp_params.get("random_state", 42)
+    np.random.seed(random_seed)
+    tf.random.set_seed(random_seed)
 
-print("当前 MLP 超参数：")
-print(f"  hidden_layer_sizes: {hidden_layer_sizes}")
-print(f"  activation:         {activation}")
-print(f"  solver:             {solver}")
-print(f"  max_iter:           {max_iter}")
-print(f"  random_state:       {random_state}")
-print(f"  alpha (L2 penalty): {alpha}")
+    print("Loaded mlp params:", mlp_params)
 
-# —— 2. 创建输出目录 ——————————————————————————————————————————————
-os.makedirs("models", exist_ok=True)
-os.makedirs("results/mlp", exist_ok=True)
-os.makedirs("runs/mlp", exist_ok=True)
+    # 2. 创建输出目录
+    os.makedirs("models", exist_ok=True)
+    os.makedirs("results/mlp", exist_ok=True)
+    run_logdir = os.path.join("runs", "mlp", datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
+    os.makedirs(run_logdir, exist_ok=True)
 
-# —— 3. TensorBoard 日志器 ————————————————————————————————————————
-writer = SummaryWriter(log_dir="runs/mlp")
+    # 3. TensorBoard & EarlyStopping 回调
+    tb_cb = callbacks.TensorBoard(
+        log_dir=run_logdir,
+        histogram_freq=1,
+        write_graph=True,
+        update_freq='epoch',
+        profile_batch=0
+    )
+    es_cb = callbacks.EarlyStopping(
+        monitor="val_loss",
+        patience=patience,
+        restore_best_weights=True
+    )
 
-# —— 4. 加载训练数据 ——————————————————————————————————————————————
-X_train = pd.read_csv("prepare/X_train.csv")
-y_train = pd.read_csv("prepare/y_train.csv").values.ravel()
+    # 4. 加载并预处理训练数据
+    X = pd.read_csv("prepare/X_train.csv")
+    y = pd.read_csv("prepare/y_train.csv").values.ravel()
+    scaler = StandardScaler().fit(X)
+    X_scaled = scaler.transform(X)
+    with open("models/mlp_scaler.pkl", "wb") as f:
+        pickle.dump(scaler, f)
 
-# —— 5. 标准化处理 ————————————————————————————————————————————————
-scaler = StandardScaler()
-X_train_scaled = scaler.fit_transform(X_train)
-joblib.dump(scaler, "models/mlp_scaler.pkl")
+    # 5. 动态构建模型
+    model = models.Sequential(name="mlp_regressor")
+    model.add(layers.Input(shape=(X_scaled.shape[1],), name="input"))
+    for units in hidden_sizes:
+        # 每一隐藏层：Dense → BatchNorm
+        model.add(layers.Dense(units, activation=activation, name=f"dense_{units}"))
+        model.add(layers.BatchNormalization(name=f"bn_{units}"))
+    # 输出层
+    model.add(layers.Dense(1, activation="linear", name="output"))
 
-# —— 6. 初始化并训练模型 ——————————————————————————————————————————
-model = MLPRegressor(
-    hidden_layer_sizes=hidden_layer_sizes,
-    activation=activation,
-    solver=solver,
-    max_iter=max_iter,
-    random_state=random_state,
-    alpha=alpha,  # 加入正则化
-    verbose=False
-)
-model.fit(X_train_scaled, y_train)
+    model.compile(
+        optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
+        loss="mse",
+        metrics=["mae"]
+    )
+    model.summary()
 
-# —— 7. 评估训练集性能 —————————————————————————————————————————————
-y_pred_train = model.predict(X_train_scaled)
-mse_train = mean_squared_error(y_train, y_pred_train)
-mae_train = mean_absolute_error(y_train, y_pred_train)
-r2_train = r2_score(y_train, y_pred_train)
+    # 6. 训练
+    history = model.fit(
+        X_scaled, y,
+        epochs=epochs,
+        batch_size=batch_size,
+        validation_split=0.2,
+        callbacks=[tb_cb, es_cb],
+        verbose=1
+    )
 
-metrics_learn = {"R2": r2_train, "MAE": mae_train, "MSE": mse_train}
-with open("results/mlp/metrics_learn.json", "w", encoding="utf-8") as f:
-    json.dump(metrics_learn, f, indent=4)
+    # 7. 保存模型
+    model.save("models/mlp_model.keras")
+    print("✅ 模型已保存到 models/mlp_model.keras")
 
-joblib.dump(model, "models/mlp_model.pkl")
+    # 8. 评估并保存指标
+    y_pred = model.predict(X_scaled).flatten()
+    mse   = mean_squared_error(y, y_pred)
+    rmse  = math.sqrt(mse)
+    mae   = mean_absolute_error(y, y_pred)
+    r2    = r2_score(y, y_pred)
 
-# —— 8. 绘制学习曲线 ————————————————————————————————————————————————
-plt.figure(figsize=(8, 6))
-plt.plot(model.loss_curve_)
-plt.title("MLP Learning Curve")
-plt.xlabel("Iterations")
-plt.ylabel("Loss")
-plt.grid(True)
-plt.tight_layout()
-plt.savefig("results/mlp/loss_curve.png")
-plt.close()
+    metrics = {
+        "MSE": mse, "RMSE": rmse, "MAE": mae, "R2": r2,
+        "hidden_layer_sizes": hidden_sizes,
+        "activation": activation,
+        "max_iter (epochs)": epochs,
+        "random_state": random_seed
+    }
+    with open("results/mlp/metrics_learn.json", "w", encoding="utf-8") as f:
+        json.dump(metrics, f, indent=4, ensure_ascii=False)
+    print("✅ 训练集评估指标已保存到 results/mlp/metrics_learn.json")
 
-# —— 9. 绘制并保存权重直方图 ———————————————————————————————————————
-for i, coef in enumerate(model.coefs_, 1):
-    weights = coef.flatten()
-    plt.figure(figsize=(8, 6))
-    plt.hist(weights, bins=30, edgecolor="black")
-    plt.title(f"Weight Histogram of Layer {i}")
-    plt.xlabel("Weight Value")
-    plt.ylabel("Frequency")
+    # 9. 绘制学习曲线
+    plt.figure(figsize=(12,5))
+    plt.subplot(1,2,1)
+    plt.plot(history.history["loss"], label="Train Loss")
+    plt.plot(history.history["val_loss"], label="Val Loss")
+    plt.title("Model Loss"); plt.xlabel("Epoch"); plt.ylabel("MSE")
+    plt.legend(); plt.grid(True)
+
+    plt.subplot(1,2,2)
+    plt.plot(history.history["mae"], label="Train MAE")
+    plt.plot(history.history["val_mae"], label="Val MAE")
+    plt.title("Model MAE"); plt.xlabel("Epoch"); plt.ylabel("MAE")
+    plt.legend(); plt.grid(True)
+
     plt.tight_layout()
-    plt.savefig(f"results/mlp/weights_histogram_layer{i}.png")
+    plt.savefig("results/mlp/mlp_learning_curves.png", dpi=300)
     plt.close()
-    writer.add_histogram(f"Layer{i}_weights", weights, 0)
+    print("✅ 学习曲线已保存到 results/mlp/mlp_learning_curves.png")
 
-# —— 10. 写入 TensorBoard 指标 ————————————————————————————————————————
-writer.add_scalar("metrics/train_R2", r2_train, 0)
-writer.add_scalar("metrics/train_MAE", mae_train, 0)
-writer.add_scalar("metrics/train_MSE", mse_train, 0)
-writer.close()
+    # 10. 绘制每层权重直方图（TensorBoard 也有）
+    for layer in model.layers:
+        if hasattr(layer, "kernel"):
+            weights = layer.kernel.numpy().flatten()
+            plt.figure(figsize=(6,4))
+            plt.hist(weights, bins=30)
+            plt.title(f"Weights of {layer.name}")
+            plt.xlabel("Value"); plt.ylabel("Frequency"); plt.grid(True)
+            plt.tight_layout()
+            plt.savefig(f"results/mlp/weights_{layer.name}.png")
+            plt.close()
+    print("✅ 权重直方图已保存到 results/mlp/")
 
-print("✅ MLP 模型训练完成")
-print("  • 模型已保存：models/mlp_model.pkl")
-print("  • 训练指标：results/mlp/metrics_learn.json")
-print("  • 权重图与学习曲线已保存")
+    print(f"\n📊 TensorBoard 日志已生成在 `{run_logdir}`，可通过：")
+    print(f"    tensorboard --logdir={os.path.dirname(run_logdir)}\n")
+
+if __name__ == "__main__":
+    main()

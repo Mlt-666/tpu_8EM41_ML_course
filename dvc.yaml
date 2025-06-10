@@ -48,7 +48,7 @@ stages:
     - tree_learn.py
     outs:
     - models/tree_model.pkl
-    - results/tree/tree_structure.png
+    - results/tree/tree_structure.svg
     metrics:
     - results/tree/metrics_learn.json:
         cache: false

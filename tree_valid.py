@@ -12,7 +12,7 @@ os.makedirs("results/tree", exist_ok=True)
 
 # —— 2. 读取当前 params.yaml 中的 tree 参数（仅用于日志打印） ————————————————————
 if os.path.exists("params.yaml"):
-    with open("params.yaml", "r") as f:
+    with open("params.yaml", "r", encoding="utf-8") as f:
         params = yaml.safe_load(f)
     print("当前使用的决策树超参数：", params.get("tree", {}))
 
